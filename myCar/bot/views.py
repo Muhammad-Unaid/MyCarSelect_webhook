@@ -95,7 +95,7 @@ def send_lead_email_async(lead_data):
     thread = threading.Thread(target=send_lead_email, args=(lead_data,))
     thread.daemon = True  # Thread will die when main program exits
     thread.start()
-    print("[Email] ✅ Email sending started in background")
+    print("[Email]  Email sending started in background")
     return JsonResponse({
     "fulfillmentText": f"Perfect! ✅\n\nThank you! Aapki details successfully submit ho gayi hain.\n\nHumari team 24 hours ke andar aapse contact karegi. 🚀\n\nKya main aur kuch help kar sakta hoon?"
     })
@@ -119,15 +119,15 @@ def send_lead_email(lead_data):
         print(f"[Email] Email: {email}")
         print(f"[Email] Full lead_data: {lead_data}")
         
-        # ✅ Better validation
+        #  Better validation
         if not name or name == 'N/A' or name.strip() == '':
-            print("[Email] ⚠️ WARNING: Name is empty!")
+            print("[Email]  WARNING: Name is empty!")
             name = "Guest User"
         if not phone or phone == 'N/A' or phone.strip() == '':
-            print("[Email] ⚠️ WARNING: Phone is empty!")
+            print("[Email]  WARNING: Phone is empty!")
             phone = "Not provided"
         if not email or email == 'N/A' or '@' not in email:
-            print("[Email] ⚠️ ERROR: Invalid email!")
+            print("[Email]  ERROR: Invalid email!")
             return False
         
         # ✅ Build Q&A HTML
@@ -493,7 +493,7 @@ def send_lead_email(lead_data):
 
         """
         
-        # ✅ Send Company Email
+        #  Send Company Email
         print(f"[Email] Sending company email to: {settings.LEAD_EMAIL}")
         company_msg = EmailMultiAlternatives(
             subject=f'🎯 New {service.upper()} Lead - {name}',
@@ -503,9 +503,9 @@ def send_lead_email(lead_data):
         )
         company_msg.attach_alternative(company_html, "text/html")
         company_msg.send()
-        print("[Email] ✅ Company email sent!")
+        print("[Email]  Company email sent!")
         
-        # ✅ Send User Email
+        #  Send User Email
         print(f"[Email] Sending user email to: {email}")
         user_msg = EmailMultiAlternatives(
             subject=f'✅ Thank You - MyCarSelect {service.upper()}',
@@ -515,13 +515,13 @@ def send_lead_email(lead_data):
         )
         user_msg.attach_alternative(user_html, "text/html")
         user_msg.send()
-        print("[Email] ✅ User email sent!")
+        print("[Email]  User email sent!")
         
-        print(f"[Email] ✅ Both emails sent!")
+        print(f"[Email]  Both emails sent!")
         return True
         
     except Exception as e:
-        print(f"[Email] ❌ Error: {str(e)}")
+        print(f"[Email]  Error: {str(e)}")
         import traceback
         print(f"[Email] Traceback: {traceback.format_exc()}")
         return False
@@ -762,7 +762,7 @@ def dialogflow_webhook(request):
                 break
         
         if not collect_context:
-            print("[Contact] ❌ No collect-details context found")
+            print("[Contact]  No collect-details context found")
             return JsonResponse({
                 "fulfillmentText": "⚠️ Session expired. Please start again."
             })
@@ -1008,7 +1008,7 @@ def dialogflow_webhook(request):
             answers = context_params.get("answers", {})
             
             if not step:
-                print("[Fallback] ⚠️ No step found in collect-details context")
+                print("[Fallback]  No step found in collect-details context")
                 return JsonResponse({
                     "fulfillmentText": "⚠️ Session expired. Please start again."
                 })
